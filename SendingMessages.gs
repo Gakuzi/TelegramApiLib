@@ -128,21 +128,7 @@ function sendVideoNote(chatId, videoNote, options) {
   return makeTelegramApiRequest('sendVideoNote', data);
 }
 
-/**
- * Отправляет стикер.
- * @param {string} chatId ID чата, куда будет отправлен стикер.
- * @param {string} sticker File ID или URL стикера.
- * @param {object} [options] Дополнительные параметры (например, disable_notification, reply_to_message_id).
- * @returns {object} Ответ от Telegram API.
- */
-function sendSticker(chatId, sticker, options) {
-  const data = {
-    chat_id: chatId,
-    sticker: sticker,
-    ...options
-  };
-  return makeTelegramApiRequest('sendSticker', data);
-}
+
 
 /**
  * Отправляет местоположение.
@@ -351,4 +337,20 @@ function uploadFile(blobSource, fileName) {
     Logger.log(`Исключение при загрузке файла: ${e.message}`);
     throw e;
   }
+}
+
+/**
+ * Отправляет группу фотографий или видео в виде альбома.
+ * @param {string} chatId Уникальный идентификатор целевого чата или имя пользователя целевого канала (в формате @channelusername).
+ * @param {Array<object>} media Массив объектов InputMediaPhoto или InputMediaVideo.
+ * @param {object} [options] Дополнительные параметры (например, disable_notification, protect_content, reply_parameters).
+ * @returns {Array<object>} Массив отправленных объектов Message.
+ */
+function sendMediaGroup(chatId, media, options) {
+  const data = {
+    chat_id: chatId,
+    media: JSON.stringify(media),
+    ...options
+  };
+  return makeTelegramApiRequest('sendMediaGroup', data);
 }

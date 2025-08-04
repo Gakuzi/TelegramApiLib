@@ -123,17 +123,18 @@ function forwardMessage(chatId, fromChatId, messageId, options) {
 }
 
 /**
- * Отправляет группу медиафайлов.
- * @param {string} chatId ID чата, куда будет отправлена группа медиафайлов.
- * @param {Array<object>} media Массив объектов InputMedia.
- * @param {object} [options] Дополнительные параметры (например, disable_notification, reply_to_message_id).
- * @returns {Array<object>} Массив объектов Message.
+ * Останавливает опрос.
+ * @param {string} chatId ID чата, содержащего опрос.
+ * @param {number} messageId ID сообщения с опросом.
+ * @param {object} [options] Дополнительные параметры (например, reply_markup).
+ * @returns {object} Объект Poll.
  */
-function sendMediaGroup(chatId, media, options) {
+function stopPoll(chatId, messageId, options) {
   const data = {
     chat_id: chatId,
-    media: JSON.stringify(media),
+    message_id: messageId,
     ...options
   };
-  return makeTelegramApiRequest('sendMediaGroup', data);
+  return makeTelegramApiRequest('stopPoll', data);
 }
+
