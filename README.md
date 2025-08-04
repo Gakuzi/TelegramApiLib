@@ -326,6 +326,190 @@ function setMyBotToken() {
 
 *   **Возвращает:** (`boolean`) True в случае успеха.
 
+### BotManagement.gs - Общие функции для управления ботом
+
+### `setWebhook(url, options)`
+
+Устанавливает вебхук для получения обновлений от Telegram.
+
+*   `url` (`string`): URL, на который Telegram будет отправлять обновления.
+*   `options` (`object`, `optional`): Дополнительные параметры (например, `certificate`, `ip_address`, `max_connections`, `allowed_updates`, `drop_pending_updates`).
+*   **Возвращает:** (`object`) Ответ от Telegram API.
+
+### `deleteWebhook(options)`
+
+Удаляет текущий вебхук Telegram.
+
+*   `options` (`object`, `optional`): Дополнительные параметры (например, `drop_pending_updates`).
+*   **Возвращает:** (`object`) Ответ от Telegram API.
+
+### `answerCallbackQuery(callbackQueryId, text, showAlert, url, cacheTime)`
+
+Отвечает на колбэк-запрос.
+
+*   `callbackQueryId` (`string`): Уникальный идентификатор колбэк-запроса.
+*   `text` (`string`, `optional`): Текст уведомления, которое будет показано пользователю.
+*   `showAlert` (`boolean`, `optional`): Если true, уведомление будет показано как всплывающее окно.
+*   `url` (`string`, `optional`): URL для открытия в браузере пользователя.
+*   `cacheTime` (`number`, `optional`): Максимальное время в секундах, в течение которого результат колбэк-запроса может быть кэширован на стороне клиента.
+*   **Возвращает:** (`object`) Ответ от Telegram API.
+
+### `answerInlineQuery(inlineQueryId, results, options)`
+
+Отвечает на инлайн-запрос.
+
+*   `inlineQueryId` (`string`): Уникальный идентификатор инлайн-запроса.
+*   `results` (`Array<object>`): Массив объектов InlineQueryResult.
+*   `options` (`object`, `optional`): Дополнительные параметры (например, `cache_time`, `is_personal`, `next_offset`).
+*   **Возвращает:** (`object`) Ответ от Telegram API.
+
+### `setGameScore(userId, score, options)`
+
+Устанавливает счет для пользователя в игре.
+
+*   `userId` (`number`): ID пользователя.
+*   `score` (`number`): Счет пользователя.
+*   `options` (`object`, `optional`): Дополнительные параметры (например, `force`, `disable_edit_message`, `chat_id`, `message_id`, `inline_message_id`).
+*   **Возвращает:** (`object`) Ответ от Telegram API.
+
+### `getGameHighScores(userId, options)`
+
+Получает таблицу рекордов для игры.
+
+*   `userId` (`number`): ID пользователя.
+*   `options` (`object`, `optional`): Дополнительные параметры (например, `chat_id`, `message_id`, `inline_message_id`).
+*   **Возвращает:** (`Array<object>`) Массив объектов GameHighScore.
+
+### `answerShippingQuery(shippingQueryId, ok, options)`
+
+Отвечает на запрос на доставку.
+
+*   `shippingQueryId` (`string`): Уникальный идентификатор запроса на доставку.
+*   `ok` (`boolean`): True, если запрос на доставку был успешно обработан.
+*   `options` (`object`, `optional`): Дополнительные параметры (например, `shipping_options`, `error_message`).
+*   **Возвращает:** (`object`) Ответ от Telegram API.
+
+### `answerPreCheckoutQuery(preCheckoutQueryId, ok, errorMessage)`
+
+Отвечает на запрос перед оплатой.
+
+*   `preCheckoutQueryId` (`string`): Уникальный идентификатор запроса перед оплатой.
+*   `ok` (`boolean`): True, если запрос перед оплатой был успешно обработан.
+*   `errorMessage` (`string`, `optional`): Сообщение об ошибке, если ok равно false.
+*   **Возвращает:** (`object`) Ответ от Telegram API.
+
+### `getFile(fileId)`
+
+Получает информацию о файле.
+
+*   `fileId` (`string`): File ID файла.
+*   **Возвращает:** (`object`) Объект File.
+
+### `downloadFile(filePath)`
+
+Скачивает файл с серверов Telegram.
+
+*   `filePath` (`string`): Путь к файлу, полученный из getFile.
+*   **Возвращает:** (`GoogleAppsScript.URL_Fetch.HTTPResponse`) HTTPResponse объект, содержащий файл.
+
+### `getUserProfilePhotos(userId, options)`
+
+Получает фотографии профиля пользователя.
+
+*   `userId` (`number`): ID пользователя.
+*   `options` (`object`, `optional`): Дополнительные параметры (например, `offset`, `limit`).
+*   **Возвращает:** (`object`) Объект UserProfilePhotos.
+
+### `getMe()`
+
+Получает информацию о боте.
+
+*   **Возвращает:** (`object`) Объект User.
+
+### `setMyCommands(commands, options)`
+
+Устанавливает список команд бота.
+
+*   `commands` (`Array<object>`): Массив объектов BotCommand.
+*   `options` (`object`, `optional`): Дополнительные параметры (например, `scope`, `language_code`).
+*   **Возвращает:** (`object`) Ответ от Telegram API.
+
+### `deleteMyCommands(options)`
+
+Удаляет список команд бота.
+
+*   `options` (`object`, `optional`): Дополнительные параметры (например, `scope`, `language_code`).
+*   **Возвращает:** (`object`) Ответ от Telegram API.
+
+### `getMyCommands(options)`
+
+Получает список команд бота.
+
+*   `options` (`object`, `optional`): Дополнительные параметры (например, `scope`, `language_code`).
+*   **Возвращает:** (`Array<object>`) Массив объектов BotCommand.
+
+### `setChatMenuButton(chatId, menuButton)`
+
+Устанавливает меню-кнопку бота.
+
+*   `chatId` (`string`): ID чата.
+*   `menuButton` (`object`): Объект MenuButton.
+*   **Возвращает:** (`object`) Ответ от Telegram API.
+
+### `getChatMenuButton(chatId)`
+
+Получает меню-кнопку бота.
+
+*   `chatId` (`string`): ID чата.
+*   **Возвращает:** (`object`) Объект MenuButton.
+
+### `setMyDefaultAdministratorRights(rights, options)`
+
+Устанавливает права администратора бота по умолчанию.
+
+*   `rights` (`object`): Объект ChatAdministratorRights.
+*   `options` (`object`, `optional`): Дополнительные параметры (например, `for_channels`).
+*   **Возвращает:** (`object`) Ответ от Telegram API.
+
+### `getMyDefaultAdministratorRights(options)`
+
+Получает права администратора бота по умолчанию.
+
+*   `options` (`object`, `optional`): Дополнительные параметры (например, `for_channels`).
+*   **Возвращает:** (`object`) Объект ChatAdministratorRights.
+
+### `getUpdates(options)`
+
+Получает входящие обновления.
+
+*   `options` (`object`, `optional`): Дополнительные параметры (например, `offset`, `limit`, `timeout`, `allowed_updates`).
+*   **Возвращает:** (`Array<object>`) Массив объектов Update.
+
+### `getWebhookInfo()`
+
+Получает текущую информацию о вебхуке.
+
+*   **Возвращает:** (`object`) Объект WebhookInfo.
+
+### `getFileLink(fileId)`
+
+Получает прямую ссылку для скачивания файла.
+
+*   `fileId` (`string`): File ID файла.
+*   **Возвращает:** (`string`) Прямая ссылка на файл.
+
+### `logOut()`
+
+Выходит из системы бота.
+
+*   **Возвращает:** (`boolean`) True в случае успеха.
+
+### `close()`
+
+Закрывает экземпляр бота.
+
+*   **Возвращает:** (`boolean`) True в случае успеха.
+
 <!-- BOT_MANAGEMENT_FUNCTIONS -->
 
 ### ChatManagement.gs - Функции для управления информацией о чатах
