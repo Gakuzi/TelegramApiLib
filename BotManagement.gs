@@ -255,3 +255,15 @@ function getMyDefaultAdministratorRights(options) {
   };
   return makeTelegramApiRequest('getMyDefaultAdministratorRights', data);
 }
+
+/**
+ * Получает входящие обновления.
+ * @param {object} [options] Дополнительные параметры (например, offset, limit, timeout, allowed_updates).
+ * @returns {Array<object>} Массив объектов Update.
+ */
+function getUpdates(options) {
+  const data = {
+    ...options
+  };
+  return makeTelegramApiRequest('getUpdates', data);
+}
