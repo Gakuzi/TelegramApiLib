@@ -31,25 +31,31 @@
       <button onclick="checkWebhook()">Диагностика вебхука</button>
     </div>
 
-    <div id="status" class="status-message"></div>
+    <div class="status-message">
+      <pre id="status"></pre>
+    </div>
   </div>
 
   <script>
     function saveToken() {
       var token = document.getElementById('botToken').value;
+      document.getElementById('status').innerText = 'Сохранение...';
       google.script.run.withSuccessHandler(showStatus).setBotTokenFromModal(token);
     }
 
     function setWebhook() {
       var url = document.getElementById('webhookUrl').value;
+      document.getElementById('status').innerText = 'Установка вебхука...';
       google.script.run.withSuccessHandler(showStatus).setWebhookFromModal(url);
     }
 
     function deleteWebhook() {
+      document.getElementById('status').innerText = 'Удаление вебхука...';
       google.script.run.withSuccessHandler(showStatus).deleteWebhookFromModal();
     }
 
     function checkWebhook() {
+      document.getElementById('status').innerText = 'Проверка вебхука...';
       google.script.run.withSuccessHandler(showStatus).getWebhookInfoFromModal();
     }
 
