@@ -168,3 +168,87 @@ function sendVideoNote(chatId, videoNote, options) {
   };
   return makeTelegramApiRequest('sendVideoNote', data);
 }
+
+/**
+ * Отправляет стикер.
+ * @param {string} chatId ID чата, куда будет отправлен стикер.
+ * @param {string} sticker File ID или URL стикера.
+ * @param {object} [options] Дополнительные параметры (например, disable_notification, reply_to_message_id).
+ * @returns {object} Ответ от Telegram API.
+ */
+function sendSticker(chatId, sticker, options) {
+  const data = {
+    chat_id: chatId,
+    sticker: sticker,
+    ...options
+  };
+  return makeTelegramApiRequest('sendSticker', data);
+}
+
+/**
+ * Отправляет местоположение.
+ * @param {string} chatId ID чата, куда будет отправлено местоположение.
+ * @param {number} latitude Широта местоположения.
+ * @param {number} longitude Долгота местоположения.
+ * @param {object} [options] Дополнительные параметры (например, horizontal_accuracy, live_period).
+ * @returns {object} Ответ от Telegram API.
+ */
+function sendLocation(chatId, latitude, longitude, options) {
+  const data = {
+    chat_id: chatId,
+    latitude: latitude,
+    longitude: longitude,
+    ...options
+  };
+  return makeTelegramApiRequest('sendLocation', data);
+}
+
+/**
+ * Отправляет контакт.
+ * @param {string} chatId ID чата, куда будет отправлен контакт.
+ * @param {string} phoneNumber Номер телефона контакта.
+ * @param {string} firstName Имя контакта.
+ * @param {object} [options] Дополнительные параметры (например, last_name, vcard).
+ * @returns {object} Ответ от Telegram API.
+ */
+function sendContact(chatId, phoneNumber, firstName, options) {
+  const data = {
+    chat_id: chatId,
+    phone_number: phoneNumber,
+    first_name: firstName,
+    ...options
+  };
+  return makeTelegramApiRequest('sendContact', data);
+}
+
+/**
+ * Отправляет опрос.
+ * @param {string} chatId ID чата, куда будет отправлен опрос.
+ * @param {string} question Текст вопроса опроса.
+ * @param {Array<string>} options Массив строк, представляющих варианты ответа.
+ * @param {object} [extraOptions] Дополнительные параметры (например, is_anonymous, type, allows_multiple_answers).
+ * @returns {object} Ответ от Telegram API.
+ */
+function sendPoll(chatId, question, options, extraOptions) {
+  const data = {
+    chat_id: chatId,
+    question: question,
+    options: JSON.stringify(options),
+    ...extraOptions
+  };
+  return makeTelegramApiRequest('sendPoll', data);
+}
+
+/**
+ * Отправляет статус действия чата.
+ * @param {string} chatId ID чата.
+ * @param {string} action Тип действия (например, 'typing', 'upload_photo').
+ * @returns {object} Ответ от Telegram API.
+ */
+function sendChatAction(chatId, action) {
+  const data = {
+    chat_id: chatId,
+    action: action
+  };
+  return makeTelegramApiRequest('sendChatAction', data);
+}
