@@ -203,3 +203,55 @@ function getMyCommands(options) {
   };
   return makeTelegramApiRequest('getMyCommands', data);
 }
+
+/**
+ * Устанавливает меню-кнопку бота.
+ * @param {string} chatId ID чата.
+ * @param {object} menuButton Объект MenuButton.
+ * @returns {object} Ответ от Telegram API.
+ */
+function setChatMenuButton(chatId, menuButton) {
+  const data = {
+    chat_id: chatId,
+    menu_button: JSON.stringify(menuButton)
+  };
+  return makeTelegramApiRequest('setChatMenuButton', data);
+}
+
+/**
+ * Получает меню-кнопку бота.
+ * @param {string} chatId ID чата.
+ * @returns {object} Объект MenuButton.
+ */
+function getChatMenuButton(chatId) {
+  const data = {
+    chat_id: chatId
+  };
+  return makeTelegramApiRequest('getChatMenuButton', data);
+}
+
+/**
+ * Устанавливает права администратора бота по умолчанию.
+ * @param {object} rights Объект ChatAdministratorRights.
+ * @param {object} [options] Дополнительные параметры (например, for_channels).
+ * @returns {object} Ответ от Telegram API.
+ */
+function setMyDefaultAdministratorRights(rights, options) {
+  const data = {
+    rights: JSON.stringify(rights),
+    ...options
+  };
+  return makeTelegramApiRequest('setMyDefaultAdministratorRights', data);
+}
+
+/**
+ * Получает права администратора бота по умолчанию.
+ * @param {object} [options] Дополнительные параметры (например, for_channels).
+ * @returns {object} Объект ChatAdministratorRights.
+ */
+function getMyDefaultAdministratorRights(options) {
+  const data = {
+    ...options
+  };
+  return makeTelegramApiRequest('getMyDefaultAdministratorRights', data);
+}
