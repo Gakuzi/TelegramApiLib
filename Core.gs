@@ -9,31 +9,11 @@
  * @returns {object} Ответ от Telegram API.
  */
 function sendMessage(chatId, text) {
-  const botToken = getBotToken(); // Получаем токен из Settings.gs
-  const telegramApiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
-
-  const payload = {
-    method: 'post',
-    payload: {
-      chat_id: chatId,
-      text: text
-    },
-    muteHttpExceptions: true
+  const data = {
+    chat_id: chatId,
+    text: text
   };
-
-  try {
-    const response = UrlFetchApp.fetch(telegramApiUrl, payload);
-    const jsonResponse = JSON.parse(response.getContentText());
-    if (!jsonResponse.ok) {
-      Logger.log(`Ошибка отправки сообщения: ${jsonResponse.description}`);
-      throw new Error(`Telegram API Error: ${jsonResponse.description}`);
-    }
-    Logger.log(`Сообщение успешно отправлено в чат ${chatId}.`);
-    return jsonResponse;
-  } catch (e) {
-    Logger.log(`Исключение при отправке сообщения: ${e.message}`);
-    throw e;
-  }
+  return makeTelegramApiRequest('sendMessage', data);
 }
 
 /**
@@ -42,30 +22,10 @@ function sendMessage(chatId, text) {
  * @returns {object} Ответ от Telegram API.
  */
 function setWebhook(url) {
-  const botToken = getBotToken();
-  const telegramApiUrl = `https://api.telegram.org/bot${botToken}/setWebhook`;
-
-  const payload = {
-    method: 'post',
-    payload: {
-      url: url
-    },
-    muteHttpExceptions: true
+  const data = {
+    url: url
   };
-
-  try {
-    const response = UrlFetchApp.fetch(telegramApiUrl, payload);
-    const jsonResponse = JSON.parse(response.getContentText());
-    if (!jsonResponse.ok) {
-      Logger.log(`Ошибка установки вебхука: ${jsonResponse.description}`);
-      throw new Error(`Telegram API Error: ${jsonResponse.description}`);
-    }
-    Logger.log(`Вебхук успешно установлен на ${url}.`);
-    return jsonResponse;
-  } catch (e) {
-    Logger.log(`Исключение при установке вебхука: ${e.message}`);
-    throw e;
-  }
+  return makeTelegramApiRequest('setWebhook', data);
 }
 
 /**
@@ -73,25 +33,5 @@ function setWebhook(url) {
  * @returns {object} Ответ от Telegram API.
  */
 function deleteWebhook() {
-  const botToken = getBotToken();
-  const telegramApiUrl = `https://api.telegram.org/bot${botToken}/deleteWebhook`;
-
-  const payload = {
-    method: 'post',
-    muteHttpExceptions: true
-  };
-
-  try {
-    const response = UrlFetchApp.fetch(telegramApiUrl, payload);
-    const jsonResponse = JSON.parse(response.getContentText());
-    if (!jsonResponse.ok) {
-      Logger.log(`Ошибка удаления вебхука: ${jsonResponse.description}`);
-      throw new Error(`Telegram API Error: ${jsonResponse.description}`);
-    }
-    Logger.log(`Вебхук успешно удален.`);
-    return jsonResponse;
-  } catch (e) {
-    Logger.log(`Исключение при удалении вебхука: ${e.message}`);
-    throw e;
-  }
+  return makeTelegramApiRequest('deleteWebhook');
 }
