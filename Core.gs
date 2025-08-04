@@ -189,7 +189,7 @@ function sendSticker(chatId, sticker, options) {
  * Отправляет местоположение.
  * @param {string} chatId ID чата, куда будет отправлено местоположение.
  * @param {number} latitude Широта местоположения.
- * @param {number} number longitude Долгота местоположения.
+ * @param {number} longitude Долгота местоположения.
  * @param {object} [options] Дополнительные параметры (например, horizontal_accuracy, live_period).
  * @returns {object} Ответ от Telegram API.
  */
@@ -659,4 +659,56 @@ function exportChatInviteLink(chatId) {
     chat_id: chatId
   };
   return makeTelegramApiRequest('exportChatInviteLink', data);
+}
+
+/**
+ * Копирует сообщение.
+ * @param {string} chatId ID целевого чата.
+ * @param {string} fromChatId ID исходного чата.
+ * @param {number} messageId ID сообщения для копирования.
+ * @param {object} [options] Дополнительные параметры (например, caption, parse_mode, reply_markup).
+ * @returns {object} Объект MessageId.
+ */
+function copyMessage(chatId, fromChatId, messageId, options) {
+  const data = {
+    chat_id: chatId,
+    from_chat_id: fromChatId,
+    message_id: messageId,
+    ...options
+  };
+  return makeTelegramApiRequest('copyMessage', data);
+}
+
+/**
+ * Пересылает сообщение.
+ * @param {string} chatId ID целевого чата.
+ * @param {string} fromChatId ID исходного чата.
+ * @param {number} messageId ID сообщения для пересылки.
+ * @param {object} [options] Дополнительные параметры (например, disable_notification, protect_content).
+ * @returns {object} Объект MessageId.
+ */
+function forwardMessage(chatId, fromChatId, messageId, options) {
+  const data = {
+    chat_id: chatId,
+    from_chat_id: fromChatId,
+    message_id: messageId,
+    ...options
+  };
+  return makeTelegramApiRequest('forwardMessage', data);
+}
+
+/**
+ * Отправляет группу медиафайлов.
+ * @param {string} chatId ID чата, куда будет отправлена группа медиафайлов.
+ * @param {Array<object>} media Массив объектов InputMedia.
+ * @param {object} [options] Дополнительные параметры (например, disable_notification, reply_to_message_id).
+ * @returns {Array<object>} Массив объектов Message.
+ */
+function sendMediaGroup(chatId, media, options) {
+  const data = {
+    chat_id: chatId,
+    media: JSON.stringify(media),
+    ...options
+  };
+  return makeTelegramApiRequest('sendMediaGroup', data);
 }
