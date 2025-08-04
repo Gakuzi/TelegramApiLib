@@ -211,3 +211,109 @@ function sendChatAction(chatId, action) {
   };
   return makeTelegramApiRequest('sendChatAction', data);
 }
+
+/**
+ * Отправляет анимированный эмодзи, представляющий игральную кость.
+ * @param {string} chatId ID чата, куда будет отправлена игральная кость.
+ * @param {object} [options] Дополнительные параметры (например, emoji, disable_notification, reply_to_message_id).
+ * @returns {object} Ответ от Telegram API.
+ */
+function sendDice(chatId, options) {
+  const data = {
+    chat_id: chatId,
+    ...options
+  };
+  return makeTelegramApiRequest('sendDice', data);
+}
+
+/**
+ * Отправляет игру.
+ * @param {string} chatId ID чата, куда будет отправлена игра.
+ * @param {string} gameShortName Короткое имя игры.
+ * @param {object} [options] Дополнительные параметры (например, disable_notification, reply_to_message_id).
+ * @returns {object} Ответ от Telegram API.
+ */
+function sendGame(chatId, gameShortName, options) {
+  const data = {
+    chat_id: chatId,
+    game_short_name: gameShortName,
+    ...options
+  };
+  return makeTelegramApiRequest('sendGame', data);
+}
+
+/**
+ * Отправляет счет-фактуру.
+ * @param {string} chatId ID чата, куда будет отправлен счет-фактура.
+ * @param {string} title Название продукта.
+ * @param {string} description Описание продукта.
+ * @param {string} payload Уникальная строка, используемая для идентификации транзакции.
+ * @param {string} providerToken Токен провайдера платежей.
+ * @param {string} currency Трехбуквенный код валюты ISO 4217.
+ * @param {Array<object>} prices Массив объектов LabeledPrice.
+ * @param {object} [options] Дополнительные параметры (например, photo_url, photo_size, need_name, is_flexible).
+ * @returns {object} Ответ от Telegram API.
+ */
+function sendInvoice(chatId, title, description, payload, providerToken, currency, prices, options) {
+  const data = {
+    chat_id: chatId,
+    title: title,
+    description: description,
+    payload: payload,
+    provider_token: providerToken,
+    currency: currency,
+    prices: JSON.stringify(prices),
+    ...options
+  };
+  return makeTelegramApiRequest('sendInvoice', data);
+}
+
+/**
+ * Отправляет местоположение с информацией о заведении.
+ * @param {string} chatId ID чата, куда будет отправлено местоположение.
+ * @param {number} latitude Широта местоположения.
+ * @param {number} longitude Долгота местоположения.
+ * @param {string} title Название заведения.
+ * @param {string} address Адрес заведения.
+ * @param {object} [options] Дополнительные параметры (например, foursquare_id, foursquare_type, google_place_id, google_place_type).
+ * @returns {object} Ответ от Telegram API.
+ */
+function sendVenue(chatId, latitude, longitude, title, address, options) {
+  const data = {
+    chat_id: chatId,
+    latitude: latitude,
+    longitude: longitude,
+    title: title,
+    address: address,
+    ...options
+  };
+  return makeTelegramApiRequest('sendVenue', data);
+}
+
+/**
+ * Редактирует живое местоположение.
+ * @param {number} latitude Новая широта местоположения.
+ * @param {number} longitude Новая долгота местоположения.
+ * @param {object} [options] Дополнительные параметры (например, chat_id, message_id, inline_message_id, horizontal_accuracy, heading, proximity_alert_radius, reply_markup).
+ * @returns {object} Ответ от Telegram API.
+ */
+function editMessageLiveLocation(latitude, longitude, options) {
+  const data = {
+    latitude: latitude,
+    longitude: longitude,
+    ...options
+  };
+  return makeTelegramApiRequest('editMessageLiveLocation', data);
+}
+
+/**
+ * Останавливает обновление живого местоположения.
+ * @param {object} [options] Дополнительные параметры (например, chat_id, message_id, inline_message_id, reply_markup).
+ * @returns {object} Ответ от Telegram API.
+ */
+function stopMessageLiveLocation(options) {
+  const data = {
+    ...options
+  };
+  return makeTelegramApiRequest('stopMessageLiveLocation', data);
+}
