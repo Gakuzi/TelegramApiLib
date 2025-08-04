@@ -143,3 +143,25 @@ function downloadFile(filePath) {
   const fileUrl = `https://api.telegram.org/file/bot${botToken}/${filePath}`;
   return UrlFetchApp.fetch(fileUrl);
 }
+
+/**
+ * Получает фотографии профиля пользователя.
+ * @param {number} userId ID пользователя.
+ * @param {object} [options] Дополнительные параметры (например, offset, limit).
+ * @returns {object} Объект UserProfilePhotos.
+ */
+function getUserProfilePhotos(userId, options) {
+  const data = {
+    user_id: userId,
+    ...options
+  };
+  return makeTelegramApiRequest('getUserProfilePhotos', data);
+}
+
+/**
+ * Получает информацию о боте.
+ * @returns {object} Объект User.
+ */
+function getMe() {
+  return makeTelegramApiRequest('getMe');
+}
