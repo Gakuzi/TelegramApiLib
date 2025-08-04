@@ -101,6 +101,22 @@ function doPost(e) {
       updateHandlers.business_connection.forEach(handler => handler(update.business_connection));
       handled = true;
     }
+    if (update.message_reaction && updateHandlers.message_reaction) {
+      updateHandlers.message_reaction.forEach(handler => handler(update.message_reaction));
+      handled = true;
+    }
+    if (update.message_reaction_count && updateHandlers.message_reaction_count) {
+      updateHandlers.message_reaction_count.forEach(handler => handler(update.message_reaction_count));
+      handled = true;
+    }
+    if (update.chat_boost && updateHandlers.chat_boost) {
+      updateHandlers.chat_boost.forEach(handler => handler(update.chat_boost));
+      handled = true;
+    }
+    if (update.removed_chat_boost && updateHandlers.removed_chat_boost) {
+      updateHandlers.removed_chat_boost.forEach(handler => handler(update.removed_chat_boost));
+      handled = true;
+    }
 
     if (!handled) {
       Logger.log('Неизвестный или необработанный тип обновления: ' + JSON.stringify(update));
@@ -129,3 +145,7 @@ function handleMyChatMember(myChatMember) { Logger.log(`Обработчик п�
 function handleChatMember(chatMember) { Logger.log(`Обработчик по умолчанию для обновления членства пользователя в чате: ${chatMember.new_chat_member.status}`); }
 function handleChatJoinRequest(chatJoinRequest) { Logger.log(`Обработчик по умолчанию для запроса на присоединение к чату от ${chatJoinRequest.from.first_name}`); }
 function handleBusinessConnection(businessConnection) { Logger.log(`Обработчик по умолчанию для бизнес-соединения: ${businessConnection.id}`); }
+function handleMessageReaction(messageReaction) { Logger.log(`Обработчик по умолчанию для реакции на сообщение: ${JSON.stringify(messageReaction)}`); }
+function handleMessageReactionCount(messageReactionCount) { Logger.log(`Обработчик по умолчанию для количества реакций на сообщение: ${JSON.stringify(messageReactionCount)}`); }
+function handleChatBoost(chatBoost) { Logger.log(`Обработчик по умолчанию для буста чата: ${JSON.stringify(chatBoost)}`); }
+function handleRemovedChatBoost(removedChatBoost) { Logger.log(`Обработчик по умолчанию для удаления буста чата: ${JSON.stringify(removedChatBoost)}`); }
