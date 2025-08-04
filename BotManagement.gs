@@ -5,21 +5,27 @@
 /**
  * Устанавливает вебхук для получения обновлений от Telegram.
  * @param {string} url URL, на который Telegram будет отправлять обновления.
+ * @param {object} [options] Дополнительные параметры (например, certificate, ip_address, max_connections, allowed_updates, drop_pending_updates).
  * @returns {object} Ответ от Telegram API.
  */
-function setWebhook(url) {
+function setWebhook(url, options) {
   const data = {
-    url: url
+    url: url,
+    ...options
   };
   return makeTelegramApiRequest('setWebhook', data);
 }
 
 /**
  * Удаляет текущий вебхук Telegram.
+ * @param {object} [options] Дополнительные параметры (например, drop_pending_updates).
  * @returns {object} Ответ от Telegram API.
  */
-function deleteWebhook() {
-  return makeTelegramApiRequest('deleteWebhook');
+function deleteWebhook(options) {
+  const data = {
+    ...options
+  };
+  return makeTelegramApiRequest('deleteWebhook', data);
 }
 
 /**
@@ -266,4 +272,12 @@ function getUpdates(options) {
     ...options
   };
   return makeTelegramApiRequest('getUpdates', data);
+}
+
+/**
+ * Получает текущую информацию о вебхуке.
+ * @returns {object} Объект WebhookInfo.
+ */
+function getWebhookInfo() {
+  return makeTelegramApiRequest('getWebhookInfo');
 }
