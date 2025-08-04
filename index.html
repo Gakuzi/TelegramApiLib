@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <style>
+    body { font-family: sans-serif; margin: 20px; }
+    .container { max-width: 500px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    h2 { text-align: center; color: #333; margin-bottom: 20px; }
+    label { display: block; margin-bottom: 8px; font-weight: bold; color: #555; }
+    input[type="text"] { width: calc(100% - 22px); padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 4px; }
+    button { background-color: #4CAF50; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; margin-right: 10px; }
+    button:hover { background-color: #45a049; }
+    .button-group { text-align: center; margin-top: 20px; }
+    .status-message { margin-top: 20px; padding: 10px; border-radius: 4px; background-color: #f0f0f0; border: 1px solid #e0e0e0; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Настройки Telegram Bot</h2>
+
+    <label for="botToken">Токен бота:</label>
+    <input type="text" id="botToken" placeholder="Введите токен вашего бота">
+
+    <label for="webhookUrl">URL вебхука:</label>
+    <input type="text" id="webhookUrl" placeholder="Введите URL вебхука">
+
+    <div class="button-group">
+      <button onclick="saveToken()">Сохранить токен</button>
+      <button onclick="setWebhook()">Установить вебхук</button>
+      <button onclick="deleteWebhook()">Удалить вебхук</button>
+      <button onclick="checkWebhook()">Диагностика вебхука</button>
+    </div>
+
+    <div id="status" class="status-message"></div>
+  </div>
+
+  <script>
+    function saveToken() {
+      var token = document.getElementById('botToken').value;
+      google.script.run.withSuccessHandler(showStatus).setBotTokenFromModal(token);
+    }
+
+    function setWebhook() {
+      var url = document.getElementById('webhookUrl').value;
+      google.script.run.withSuccessHandler(showStatus).setWebhookFromModal(url);
+    }
+
+    function deleteWebhook() {
+      google.script.run.withSuccessHandler(showStatus).deleteWebhookFromModal();
+    }
+
+    function checkWebhook() {
+      google.script.run.withSuccessHandler(showStatus).getWebhookInfoFromModal();
+    }
+
+    function showStatus(message) {
+      document.getElementById('status').innerText = message;
+    }
+  </script>
+</body>
+</html>
