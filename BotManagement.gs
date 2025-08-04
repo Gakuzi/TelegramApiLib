@@ -294,3 +294,19 @@ function getFileLink(fileId) {
   }
   throw new Error('Не удалось получить информацию о файле или путь к файлу.');
 }
+
+/**
+ * Выходит из системы бота.
+ * @returns {boolean} True в случае успеха.
+ */
+function logOut() {
+  return makeTelegramApiRequest('logOut');
+}
+
+/**
+ * Закрывает экземпляр бота.
+ * @returns {boolean} True в случае успеха.
+ */
+function close() {
+  return makeTelegramApiRequest('close');
+}
