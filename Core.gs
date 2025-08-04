@@ -252,3 +252,87 @@ function sendChatAction(chatId, action) {
   };
   return makeTelegramApiRequest('sendChatAction', data);
 }
+
+/**
+ * Редактирует текстовое сообщение.
+ * @param {string} chatId ID чата, содержащего сообщение.
+ * @param {number} messageId ID сообщения для редактирования.
+ * @param {string} text Новый текст сообщения.
+ * @param {object} [options] Дополнительные параметры (например, parse_mode, reply_markup).
+ * @returns {object} Ответ от Telegram API.
+ */
+function editMessageText(chatId, messageId, text, options) {
+  const data = {
+    chat_id: chatId,
+    message_id: messageId,
+    text: text,
+    ...options
+  };
+  return makeTelegramApiRequest('editMessageText', data);
+}
+
+/**
+ * Редактирует подпись к сообщению.
+ * @param {string} chatId ID чата, содержащего сообщение.
+ * @param {number} messageId ID сообщения для редактирования.
+ * @param {string} [caption] Новая подпись к сообщению.
+ * @param {object} [options] Дополнительные параметры (например, parse_mode, reply_markup).
+ * @returns {object} Ответ от Telegram API.
+ */
+function editMessageCaption(chatId, messageId, caption, options) {
+  const data = {
+    chat_id: chatId,
+    message_id: messageId,
+  };
+  if (caption) data.caption = caption;
+  Object.assign(data, options);
+  return makeTelegramApiRequest('editMessageCaption', data);
+}
+
+/**
+ * Редактирует медиафайл сообщения.
+ * @param {string} chatId ID чата, содержащего сообщение.
+ * @param {number} messageId ID сообщения для редактирования.
+ * @param {object} media Объект InputMedia.
+ * @param {object} [options] Дополнительные параметры (например, reply_markup).
+ * @returns {object} Ответ от Telegram API.
+ */
+function editMessageMedia(chatId, messageId, media, options) {
+  const data = {
+    chat_id: chatId,
+    message_id: messageId,
+    media: JSON.stringify(media),
+    ...options
+  };
+  return makeTelegramApiRequest('editMessageMedia', data);
+}
+
+/**
+ * Редактирует разметку ответа сообщения.
+ * @param {string} chatId ID чата, содержащего сообщение.
+ * @param {number} messageId ID сообщения для редактирования.
+ * @param {object} [replyMarkup] Новая разметка ответа.
+ * @returns {object} Ответ от Telegram API.
+ */
+function editMessageReplyMarkup(chatId, messageId, replyMarkup) {
+  const data = {
+    chat_id: chatId,
+    message_id: messageId,
+  };
+  if (replyMarkup) data.reply_markup = JSON.stringify(replyMarkup);
+  return makeTelegramApiRequest('editMessageReplyMarkup', data);
+}
+
+/**
+ * Удаляет сообщение.
+ * @param {string} chatId ID чата, содержащего сообщение.
+ * @param {number} messageId ID сообщения для удаления.
+ * @returns {object} Ответ от Telegram API.
+ */
+function deleteMessage(chatId, messageId) {
+  const data = {
+    chat_id: chatId,
+    message_id: messageId
+  };
+  return makeTelegramApiRequest('deleteMessage', data);
+}
