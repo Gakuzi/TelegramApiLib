@@ -88,3 +88,35 @@ function getGameHighScores(userId, options) {
   };
   return makeTelegramApiRequest('getGameHighScores', data);
 }
+
+/**
+ * Отвечает на запрос на доставку.
+ * @param {string} shippingQueryId Уникальный идентификатор запроса на доставку.
+ * @param {boolean} ok True, если запрос на доставку был успешно обработан.
+ * @param {object} [options] Дополнительные параметры (например, shipping_options, error_message).
+ * @returns {object} Ответ от Telegram API.
+ */
+function answerShippingQuery(shippingQueryId, ok, options) {
+  const data = {
+    shipping_query_id: shippingQueryId,
+    ok: ok,
+    ...options
+  };
+  return makeTelegramApiRequest('answerShippingQuery', data);
+}
+
+/**
+ * Отвечает на запрос перед оплатой.
+ * @param {string} preCheckoutQueryId Уникальный идентификатор запроса перед оплатой.
+ * @param {boolean} ok True, если запрос перед оплатой был успешно обработан.
+ * @param {string} [errorMessage] Сообщение об ошибке, если ok равно false.
+ * @returns {object} Ответ от Telegram API.
+ */
+function answerPreCheckoutQuery(preCheckoutQueryId, ok, errorMessage) {
+  const data = {
+    pre_checkout_query_id: preCheckoutQueryId,
+    ok: ok,
+  };
+  if (errorMessage) data.error_message = errorMessage;
+  return makeTelegramApiRequest('answerPreCheckoutQuery', data);
+}
