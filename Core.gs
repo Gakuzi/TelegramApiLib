@@ -35,3 +35,63 @@ function sendMessage(chatId, text) {
     throw e;
   }
 }
+
+/**
+ * Устанавливает вебхук для получения обновлений от Telegram.
+ * @param {string} url URL, на который Telegram будет отправлять обновления.
+ * @returns {object} Ответ от Telegram API.
+ */
+function setWebhook(url) {
+  const botToken = getBotToken();
+  const telegramApiUrl = `https://api.telegram.org/bot${botToken}/setWebhook`;
+
+  const payload = {
+    method: 'post',
+    payload: {
+      url: url
+    },
+    muteHttpExceptions: true
+  };
+
+  try {
+    const response = UrlFetchApp.fetch(telegramApiUrl, payload);
+    const jsonResponse = JSON.parse(response.getContentText());
+    if (!jsonResponse.ok) {
+      Logger.log(`Ошибка установки вебхука: ${jsonResponse.description}`);
+      throw new Error(`Telegram API Error: ${jsonResponse.description}`);
+    }
+    Logger.log(`Вебхук успешно установлен на ${url}.`);
+    return jsonResponse;
+  } catch (e) {
+    Logger.log(`Исключение при установке вебхука: ${e.message}`);
+    throw e;
+  }
+}
+
+/**
+ * Удаляет текущий вебхук Telegram.
+ * @returns {object} Ответ от Telegram API.
+ */
+function deleteWebhook() {
+  const botToken = getBotToken();
+  const telegramApiUrl = `https://api.telegram.org/bot${botToken}/deleteWebhook`;
+
+  const payload = {
+    method: 'post',
+    muteHttpExceptions: true
+  };
+
+  try {
+    const response = UrlFetchApp.fetch(telegramApiUrl, payload);
+    const jsonResponse = JSON.parse(response.getContentText());
+    if (!jsonResponse.ok) {
+      Logger.log(`Ошибка удаления вебхука: ${jsonResponse.description}`);
+      throw new Error(`Telegram API Error: ${jsonResponse.description}`);
+    }
+    Logger.log(`Вебхук успешно удален.`);
+    return jsonResponse;
+  } catch (e) {
+    Logger.log(`Исключение при удалении вебхука: ${e.message}`);
+    throw e;
+  }
+}
