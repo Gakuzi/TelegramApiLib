@@ -165,3 +165,41 @@ function getUserProfilePhotos(userId, options) {
 function getMe() {
   return makeTelegramApiRequest('getMe');
 }
+
+/**
+ * Устанавливает список команд бота.
+ * @param {Array<object>} commands Массив объектов BotCommand.
+ * @param {object} [options] Дополнительные параметры (например, scope, language_code).
+ * @returns {object} Ответ от Telegram API.
+ */
+function setMyCommands(commands, options) {
+  const data = {
+    commands: JSON.stringify(commands),
+    ...options
+  };
+  return makeTelegramApiRequest('setMyCommands', data);
+}
+
+/**
+ * Удаляет список команд бота.
+ * @param {object} [options] Дополнительные параметры (например, scope, language_code).
+ * @returns {object} Ответ от Telegram API.
+ */
+function deleteMyCommands(options) {
+  const data = {
+    ...options
+  };
+  return makeTelegramApiRequest('deleteMyCommands', data);
+}
+
+/**
+ * Получает список команд бота.
+ * @param {object} [options] Дополнительные параметры (например, scope, language_code).
+ * @returns {Array<object>} Массив объектов BotCommand.
+ */
+function getMyCommands(options) {
+  const data = {
+    ...options
+  };
+  return makeTelegramApiRequest('getMyCommands', data);
+}
