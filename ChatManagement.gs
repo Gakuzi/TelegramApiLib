@@ -159,3 +159,43 @@ function unpinAllChatMessages(chatId) {
   };
   return makeTelegramApiRequest('unpinAllChatMessages', data);
 }
+
+/**
+ * Устанавливает разрешения для всех членов чата по умолчанию.
+ * @param {string} chatId ID чата.
+ * @param {object} permissions Объект ChatPermissions.
+ * @returns {object} Ответ от Telegram API.
+ */
+function setChatPermissions(chatId, permissions) {
+  const data = {
+    chat_id: chatId,
+    permissions: permissions
+  };
+  return makeTelegramApiRequest('setChatPermissions', data);
+}
+
+/**
+ * Устанавливает набор стикеров для чата.
+ * @param {string} chatId ID чата.
+ * @param {string} stickerSetName Название набора стикеров.
+ * @returns {object} Ответ от Telegram API.
+ */
+function setChatStickerSet(chatId, stickerSetName) {
+  const data = {
+    chat_id: chatId,
+    sticker_set_name: stickerSetName
+  };
+  return makeTelegramApiRequest('setChatStickerSet', data);
+}
+
+/**
+ * Удаляет набор стикеров для чата.
+ * @param {string} chatId ID чата.
+ * @returns {object} Ответ от Telegram API.
+ */
+function deleteChatStickerSet(chatId) {
+  const data = {
+    chat_id: chatId
+  };
+  return makeTelegramApiRequest('deleteChatStickerSet', data);
+}
