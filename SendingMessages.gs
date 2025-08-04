@@ -317,3 +317,38 @@ function stopMessageLiveLocation(options) {
   };
   return makeTelegramApiRequest('stopMessageLiveLocation', data);
 }
+
+/**
+ * Загружает файл на сервер Telegram.
+ * @param {GoogleAppsScript.Base.BlobSource} blobSource Объект BlobSource, представляющий файл для загрузки.
+ * @param {string} fileName Имя файла.
+ * @returns {object} Объект File, содержащий file_id и file_unique_id.
+ */
+function uploadFile(blobSource, fileName) {
+  const botToken = getBotToken();
+  const telegramApiUrl = `https://api.telegram.org/bot${botToken}/uploadFile`;
+
+  const formData = {
+    'file': blobSource.setName(fileName)
+  };
+
+  const options = {
+    method: 'post',
+    payload: formData,
+    muteHttpExceptions: true
+  };
+
+  try {
+    const response = UrlFetchApp.fetch(telegramApiUrl, options);
+    const jsonResponse = JSON.parse(response.getContentText());
+
+    if (!jsonResponse.ok) {
+      Logger.log(`Ошибка загрузки файла: ${jsonResponse.description}`);
+      throw new Error(`Telegram API Error: ${jsonResponse.description}`);
+    }
+    return jsonResponse.result;
+  } catch (e) {
+    Logger.log(`Исключение при загрузке файла: ${e.message}`);
+    throw e;
+  }
+}

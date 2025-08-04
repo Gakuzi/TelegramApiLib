@@ -281,3 +281,16 @@ function getUpdates(options) {
 function getWebhookInfo() {
   return makeTelegramApiRequest('getWebhookInfo');
 }
+
+/**
+ * Получает прямую ссылку для скачивания файла.
+ * @param {string} fileId File ID файла.
+ * @returns {string} Прямая ссылка на файл.
+ */
+function getFileLink(fileId) {
+  const fileInfo = getFile(fileId);
+  if (fileInfo && fileInfo.file_path) {
+    return `https://api.telegram.org/file/bot${getBotToken()}/${fileInfo.file_path}`;
+  }
+  throw new Error('Не удалось получить информацию о файле или путь к файлу.');
+}
