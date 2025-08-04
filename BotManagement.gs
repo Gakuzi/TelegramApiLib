@@ -120,3 +120,26 @@ function answerPreCheckoutQuery(preCheckoutQueryId, ok, errorMessage) {
   if (errorMessage) data.error_message = errorMessage;
   return makeTelegramApiRequest('answerPreCheckoutQuery', data);
 }
+
+/**
+ * Получает информацию о файле.
+ * @param {string} fileId File ID файла.
+ * @returns {object} Объект File.
+ */
+function getFile(fileId) {
+  const data = {
+    file_id: fileId
+  };
+  return makeTelegramApiRequest('getFile', data);
+}
+
+/**
+ * Скачивает файл с серверов Telegram.
+ * @param {string} filePath Путь к файлу, полученный из getFile.
+ * @returns {GoogleAppsScript.URL_Fetch.HTTPResponse} HTTPResponse объект, содержащий файл.
+ */
+function downloadFile(filePath) {
+  const botToken = getBotToken();
+  const fileUrl = `https://api.telegram.org/file/bot${botToken}/${filePath}`;
+  return UrlFetchApp.fetch(fileUrl);
+}
