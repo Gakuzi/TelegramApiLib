@@ -56,3 +56,19 @@ function answerCallbackQuery(callbackQueryId, text, showAlert, url, cacheTime) {
 
   return makeTelegramApiRequest('answerCallbackQuery', data);
 }
+
+/**
+ * Отправляет фотографию.
+ * @param {string} chatId ID чата, куда будет отправлена фотография.
+ * @param {string} photo File ID или URL фотографии.
+ * @param {object} [options] Дополнительные параметры (например, caption, parse_mode).
+ * @returns {object} Ответ от Telegram API.
+ */
+function sendPhoto(chatId, photo, options) {
+  const data = {
+    chat_id: chatId,
+    photo: photo,
+    ...options
+  };
+  return makeTelegramApiRequest('sendPhoto', data);
+}
